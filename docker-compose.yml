@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:14
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: formfast
+      POSTGRES_USER: formfast
+      POSTGRES_PASSWORD: Um8G7rjx2Tjo
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    networks:
+      - postgres_network
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U formfast -d formfast']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  web:
+    image: iieo/formfast:${COMMIT_HASH}
+    container_name: formfast
+    ports:
+      - '0.0.0.0:3000:3000'
+    networks:
+      - postgres_network
+    restart: always
+    healthcheck:
+      test: ['CMD-SHELL', 'curl -f http://localhost:3000/health || exit 1']
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+networks:
+  postgres_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local

@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# FormFast
 
-## Getting Started
+## Development Setup
 
-First, run the development server:
+Start a local Postgres database:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```sh
+docker compose up
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Check that you can access it:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```sh
+psql "postgresql://deutschlandgpt:t6suFdXyUHcr@localhost:5432/deutschlandgpt"
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+You need these environment variables:
 
-## Learn More
+```sh
+DATABASE_URL=postgresql://deutschlandgpt:t6suFdXyUHcr@localhost:5432/deutschlandgpt
+NEXTAUTH_SECRET=whatever
+NEXTAUTH_URL=http://localhost:3000
+EMAIL_BASE_URL=http://localhost:3000
+```
 
-To learn more about Next.js, take a look at the following resources:
+Start the dev server:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```sh
+pnpm dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Production Setup
 
-## Deploy on Vercel
+Change the Postgres password.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Start a local Postgres database:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```sh
+docker compose up
+```
+
+Use API
+
+```sh
+curl -X POST -H "Content-Type: application/json" -d '{"messages":[{"role": "user", "content": "wie hoch ist der eiffelturm"}], "temperature": 0.4, "stream": false}' localhost:3000/api/completion
+```
