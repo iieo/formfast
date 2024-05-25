@@ -1,2 +1,2 @@
 export const inputClassName =
-  'border-none bg-main-200 rounded-none w-full text-xl p-3 focus:outline-none';
+  'w-96 px-4 py-2 bg-main-700 border border-main-600 rounded-md text-white';

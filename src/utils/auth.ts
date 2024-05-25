@@ -1,3 +1,4 @@
+'use server';
 import { authOptions } from '@/app/api/auth/[...nextauth]/auth';
 import { dbGetUserByEmail } from '@/db/functions/user';
 import type { Session } from 'next-auth';

@@ -31,13 +31,13 @@ export default function ProfileMenu({ email, firstName, lastName }: ProfileMenuP
             isOpen ? 'bg-main-200' : 'bg-transparent',
           )}
         >
-          <AvatarIcon />
-          <div>
-            <p className="truncate max-w-[140px] font-semibold text-left">
+          <AvatarIcon color="white" width={25} height={25} />
+          <div className="w-full text-white">
+            <p className="truncate font-semibold text-left w-full">
               {firstName} {lastName}
             </p>
 
-            <p className="truncate max-w-[140px] text-left text-main-black">Kostenloser Account</p>
+            <p className="truncate text-left">Kostenloser Account</p>
           </div>
         </button>
       </DropdownMenu.Trigger>
