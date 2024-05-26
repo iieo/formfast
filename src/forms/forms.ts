@@ -1,6 +1,6 @@
 export type FormContent = FormField[];
 
-export type FormField = ShortTextFormField | HeadingFormField | SubmitFormField;
+export type FormField = ShortTextFormFieldProps | HeadingFormFieldProps | SubmitFormFieldProps;
 
 export type FormFieldType = 'heading' | 'short-text' | 'submit';
 
@@ -8,19 +8,19 @@ export type CommonFormProps = {
   required: boolean;
 };
 
-export type HeadingFormField = CommonFormProps & {
+export type HeadingFormFieldProps = CommonFormProps & {
   type: 'heading';
   title: string;
   subtitle: string;
 };
 
-export type ShortTextFormField = CommonFormProps & {
+export type ShortTextFormFieldProps = CommonFormProps & {
   type: 'short-text';
   label: string;
   sublabel: string;
 };
 
-export type SubmitFormField = CommonFormProps & {
+export type SubmitFormFieldProps = CommonFormProps & {
   type: 'submit';
   buttonText: string;
 };

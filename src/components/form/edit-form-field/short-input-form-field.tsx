@@ -1,10 +1,10 @@
-import { FormField, ShortTextFormField } from '@/forms/forms';
+import { FormField, ShortTextFormFieldProps } from '@/forms/forms';
 
 export default function ShortInput({
   content,
   setField,
 }: {
-  content: ShortTextFormField;
+  content: ShortTextFormFieldProps;
   setField: (field: FormField) => void;
 }) {
   return (

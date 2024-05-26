@@ -1,4 +1,4 @@
-import { FormField, HeadingFormField, SubmitFormField } from '@/forms/forms';
+import { FormField, HeadingFormFieldProps, SubmitFormFieldProps } from '@/forms/forms';
 import { buttonClassName } from '@/utils/tailwind/button';
 import { cw } from '@/utils/tailwind/utils';
 
@@ -6,7 +6,7 @@ export default function Submit({
   content,
   setField,
 }: {
-  content: SubmitFormField;
+  content: SubmitFormFieldProps;
   setField: (field: FormField) => void;
 }) {
   return (

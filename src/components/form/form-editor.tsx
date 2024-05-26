@@ -31,26 +31,28 @@ export default function FormEditor({ form }: { form: Form }) {
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
     const data = active.data.current as { type: string; field: FormField };
+    setActiveItem(null);
 
     if (data.type === 'add-form-field' && over !== null) {
       const overData = over.data.current as { index: number };
       const overIndex = overData.index;
       console.log(overIndex);
 
-      setActiveItem(null);
       setFormContent((content) => {
         const newContent = [...content];
-        newContent.splice(overIndex + 1, 0, data.field);
+        newContent.splice(overIndex, 0, data.field);
         return newContent;
       });
     } else {
       const { active, over } = event;
-      if (active.data.current) {
-      }
+      const activeData = active.data.current as { index: number };
+      const overData = over?.data.current as { index: number };
 
-      if (over !== null && active.id !== over.id) {
+      console.log(overData?.index, activeData.index);
+
+      if (over !== null && activeData.index !== overData.index) {
         setFormContent((items) => {
-          return arrayMove(items, Number(active.id), Number(over.id));
+          return arrayMove(items, overData.index, activeData.index);
         });
       }
     }
@@ -98,8 +100,23 @@ export default function FormEditor({ form }: { form: Form }) {
             }}
           />
         </div>
-        <div className="flex flex-col items-center justify-center p-12 flex-grow overflow-y-auto">
+        <div className="flex flex-col items-center p-12 flex-grow overflow-y-auto">
           <div className="rouded bg-main-800 w-full max-w-[50rem] p-4 flex flex-col gap-2">
+            {activeItem ? (
+              <Droppable
+                id={'startitem'}
+                className="bg-main-700 py-2 flex items-center"
+                data={{ index: 0 }}
+              >
+                <div className="flex-1 h-[1px] bg-main-600" />
+                <div className="border border-main-600 rounded-full p-2">
+                  <PlusIcon className="text-white" />
+                </div>
+                <div className="flex-1 h-[1px] bg-main-600" />
+              </Droppable>
+            ) : (
+              <div className="py-6" />
+            )}
             <SortableContext
               items={formContent.map((_, index) => index.toString())}
               strategy={verticalListSortingStrategy}
@@ -108,8 +125,8 @@ export default function FormEditor({ form }: { form: Form }) {
                 <>
                   <SortableDraggable
                     id={index.toString()}
-                    key={index}
-                    data={{ type: 'form-field', formField: item }}
+                    key={index.toString()}
+                    data={{ type: 'form-field', formField: item, index: index }}
                   >
                     <button
                       type="button"
@@ -134,7 +151,7 @@ export default function FormEditor({ form }: { form: Form }) {
                       id={index.toString()}
                       key={index + 'droppable'}
                       className="bg-main-700 py-2 flex items-center"
-                      data={{ index }}
+                      data={{ index: index }}
                     >
                       <div className="flex-1 h-[1px] bg-main-600" />
                       <div className="border border-main-600 rounded-full p-2">

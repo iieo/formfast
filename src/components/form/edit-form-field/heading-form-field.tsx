@@ -1,10 +1,10 @@
-import { FormField, HeadingFormField } from '@/forms/forms';
+import { FormField, HeadingFormFieldProps } from '@/forms/forms';
 
-export default function Heading({
+export default function HeadingFormField({
   content,
   setField,
 }: {
-  content: HeadingFormField;
+  content: HeadingFormFieldProps;
   setField: (field: FormField) => void;
 }) {
   return (

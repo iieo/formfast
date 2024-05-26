@@ -1,10 +1,13 @@
 import { User } from '@/db/types';
 import { AvatarIcon } from '@radix-ui/react-icons';
+import Link from 'next/link';
 
 function Header({ user, title }: { user?: User; title: string }) {
   return (
     <div className="flex items-center justify-between px-8 border-b border-main-700 min-h-[4rem] max-h-[4rem]">
-      <div className="text-lg font-bold text-white">FormFast</div>
+      <Link href="/" className="text-lg font-bold text-white">
+        FormFast
+      </Link>
       <div className="text-lg font-bold text-white">{title}</div>
       <div className="flex items-center">
         {user && (

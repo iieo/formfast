@@ -1,7 +1,7 @@
 import { FormField } from '@/forms/forms';
-import ShortInput from './formfields/short-input';
-import Heading from './formfields/heading';
-import Submit from './formfields/submit';
+import ShortInput from './edit-form-field/short-input-form-field';
+import HeadingFormField from './edit-form-field/heading-form-field';
+import Submit from './edit-form-field/submit-form-field';
 
 function GenericFormField({
   content,
@@ -12,7 +12,7 @@ function GenericFormField({
 }) {
   switch (content.type) {
     case 'heading':
-      return <Heading setField={setField} content={content} />;
+      return <HeadingFormField setField={setField} content={content} />;
     case 'short-text':
       return <ShortInput setField={setField} content={content} />;
     case 'submit':
