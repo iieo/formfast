@@ -1,6 +1,6 @@
 {
-  "id": "ca748cf0-7ab3-4656-9f64-58fe68c922f9",
-  "prevId": "1cd76e4b-947d-4aaf-a068-f99f648bf9e8",
+  "id": "f8914005-7f85-435d-ab2d-9b5e0834ec4f",
+  "prevId": "ca748cf0-7ab3-4656-9f64-58fe68c922f9",
   "version": "5",
   "dialect": "pg",
   "tables": {
@@ -22,21 +22,14 @@
           "notNull": true,
           "default": "'active'"
         },
-        "name": {
-          "name": "name",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'Form'"
-        },
         "created_by": {
           "name": "created_by",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
-        "content": {
-          "name": "content",
+        "data": {
+          "name": "data",
           "type": "json",
           "primaryKey": false,
           "notNull": true

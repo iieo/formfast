@@ -3,7 +3,7 @@ import { AvatarIcon } from '@radix-ui/react-icons';
 
 function Header({ user, title }: { user?: User; title: string }) {
   return (
-    <div className="flex items-center justify-between px-8 py-4 border-b border-main-700">
+    <div className="flex items-center justify-between px-8 border-b border-main-700 min-h-[4rem] max-h-[4rem]">
       <div className="text-lg font-bold text-white">FormFast</div>
       <div className="text-lg font-bold text-white">{title}</div>
       <div className="flex items-center">

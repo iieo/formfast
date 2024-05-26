@@ -17,8 +17,8 @@ export const formStatusSchemaEnum = pgEnum('form_status', formStatusSchema.optio
 
 export const formTable = pgTable('form', {
   id: uuid('id').defaultRandom().primaryKey(),
-  status: formStatusSchemaEnum('form_status').notNull().default('active'),
   name: text('name').notNull().default('Form'),
+  status: formStatusSchemaEnum('form_status').notNull().default('active'),
   createdBy: uuid('created_by')
     .notNull()
     .references(() => userTable.id),

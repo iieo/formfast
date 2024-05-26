@@ -24,7 +24,7 @@ export async function dbCreateForm(userId: string, name: string) {
       .insert(formTable)
       .values({
         status: 'active',
-        name,
+        name: name,
         createdBy: userId,
         content: [],
       })
@@ -35,10 +35,6 @@ export async function dbCreateForm(userId: string, name: string) {
   }
   await db.insert(userFormMappingTable).values({ userId, formId: form.id });
   return form.id;
-}
-
-export async function dbUpdateFormName(formId: string, formName: string) {
-  await db.update(formTable).set({ name: formName }).where(eq(formTable.id, formId));
 }
 
 export async function dbUpdateFormContent(formId: string, content: FormContent) {
