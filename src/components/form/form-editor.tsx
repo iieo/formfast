@@ -5,7 +5,7 @@ import useAutosave from '@/utils/hooks/useAutosave';
 import { cw } from '@/utils/tailwind/utils';
 import { DndContext, DragEndEvent } from '@dnd-kit/core';
 import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
-import { BellIcon, MixIcon, PlusIcon, TimerIcon } from '@radix-ui/react-icons';
+import { BellIcon, MixIcon, PlusIcon, TimerIcon, TrashIcon } from '@radix-ui/react-icons';
 import React from 'react';
 import Header from '../common/header';
 import Droppable from '../dnd/droppable';
@@ -27,12 +27,19 @@ export default function FormEditor({
   const [formContent, setFormContent] = React.useState<FormFieldRow[]>(formFields);
   const sensors = useFieldSensors();
   useAutosave({
-    interval: 1000,
     data: formContent,
     onSave: async (data) => {
       await dbUpdateFormFields(data);
     },
   });
+
+  function handleDelete(index: number) {
+    setFormContent((content) => {
+      const newContent = [...content];
+      newContent.splice(index, 1);
+      return newContent;
+    });
+  }
 
   async function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
@@ -49,8 +56,6 @@ export default function FormEditor({
         position: overIndex,
       });
       if (newFormFieldRow !== undefined) {
-        console.log(overIndex);
-
         //insert at index overindex
         setFormContent((items) => {
           const newItems = [...items];
@@ -62,8 +67,6 @@ export default function FormEditor({
       const { active, over } = event;
       const activeData = active.data.current as { index: number };
       const overData = over?.data.current as { index: number };
-
-      console.log(overData?.index, activeData.index);
 
       if (over !== null && activeData.index !== overData.index) {
         setFormContent((items) => {
@@ -146,7 +149,7 @@ export default function FormEditor({
                     <button
                       type="button"
                       onClick={() => setSelected(item)}
-                      className={cw(selected === item && 'bg-main-700 ', 'w-full')}
+                      className={cw(selected === item && 'bg-main-700 ', 'w-full relative')}
                     >
                       <GenericFormField
                         key={index}
@@ -159,9 +162,19 @@ export default function FormEditor({
                           })
                         }
                       />
+                      {selected === item && (
+                        <div className="absolute bottom-2 right-[50%] translate-x-[50%] text-white">
+                          <button
+                            onClick={() => handleDelete(index)}
+                            className="p-2 rounded-full bg-red-900"
+                          >
+                            <TrashIcon className=" text-white h-5 w-5" />
+                          </button>
+                        </div>
+                      )}
                     </button>
                   </SortableDraggable>
-                  {activeItem ? (
+                  {activeItem != null ? (
                     <Droppable
                       id={item.id + 'droppable'}
                       key={item.id + 'droppable'}
