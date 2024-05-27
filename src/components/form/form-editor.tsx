@@ -170,10 +170,9 @@ export default function FormEditor({
               strategy={verticalListSortingStrategy}
             >
               {formContent.map((item, index) => (
-                <>
+                <React.Fragment key={item.id}>
                   <SortableDraggable
                     id={item.id}
-                    key={item.id}
                     data={{ type: 'form-field', formField: item, index: index }}
                   >
                     <button
@@ -207,7 +206,6 @@ export default function FormEditor({
                   {activeItem != null ? (
                     <Droppable
                       id={item.id + 'droppable'}
-                      key={item.id + 'droppable'}
                       className="bg-main-700 py-2 flex items-center"
                       data={{ index: index + 1 }}
                     >
@@ -220,7 +218,7 @@ export default function FormEditor({
                   ) : (
                     <div key={index + 'spacer'} className="py-6" />
                   )}
-                </>
+                </React.Fragment>
               ))}
             </SortableContext>
           </div>
