@@ -1,5 +1,3 @@
-export type FormContent = FormField[];
-
 export type FormField = ShortTextFormFieldProps | HeadingFormFieldProps | SubmitFormFieldProps;
 
 export type FormFieldType = 'heading' | 'short-text' | 'submit';

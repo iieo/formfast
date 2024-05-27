@@ -1,18 +1,20 @@
-import { FormField, ShortTextFormFieldProps } from '@/forms/forms';
+import { FormFieldRow } from '@/db/types';
+import { ShortTextFormFieldProps } from '@/forms/forms';
 
 export default function ShortInput({
-  content,
+  formField,
   setField,
 }: {
-  content: ShortTextFormFieldProps;
-  setField: (field: FormField) => void;
+  formField: FormFieldRow;
+  setField: (field: FormFieldRow) => void;
 }) {
+  const content = formField.content as ShortTextFormFieldProps;
   return (
     <div className="p-12 flex flex-col gap-2 rounded focus-within:outline outline-2 outline-main-700">
       <input
         className="bg-transparent text-xl w-full focus:outline-0 text-main-100"
         onChange={(e) => {
-          setField({ ...content, label: e.target.value });
+          setField({ ...formField, content: { ...content, label: e.target.value } });
         }}
         defaultValue={content.label}
         placeholder="Label"
@@ -24,7 +26,7 @@ export default function ShortInput({
       <input
         className="bg-transparent text-sm w-full  focus:outline-0 text-main-400"
         onChange={(e) => {
-          setField({ ...content, sublabel: e.target.value });
+          setField({ ...formField, content: { ...content, sublabel: e.target.value } });
         }}
         defaultValue={content.sublabel}
         placeholder="Sublabel"

@@ -1,7 +1,6 @@
 'use client';
-import { dbUpdateFormContent } from '@/db/functions/form';
-import { Form } from '@/db/types';
-import { FormField } from '@/forms/forms';
+import { dbCreateFormField, dbUpdateFormFields } from '@/db/functions/form';
+import { FormFieldRow, FormRow } from '@/db/types';
 import useAutosave from '@/utils/hooks/useAutosave';
 import { cw } from '@/utils/tailwind/utils';
 import { DndContext, DragEndEvent } from '@dnd-kit/core';
@@ -14,35 +13,51 @@ import SortableDraggable from '../dnd/sortable-draggable';
 import { useFieldSensors } from '../dnd/useFieldSensors';
 import AddFormFieldDraggable from './add-form-field-draggable';
 import GenericFormField from './generic-form-field';
+import { FormField } from '@/forms/forms';
 
-export default function FormEditor({ form }: { form: Form }) {
-  const [selected, setSelected] = React.useState<FormField | null>(null);
-  const [activeItem, setActiveItem] = React.useState<FormField | null>(null);
-  const [formContent, setFormContent] = React.useState<FormField[]>(form.content);
+export default function FormEditor({
+  form,
+  formFields,
+}: {
+  form: FormRow;
+  formFields: FormFieldRow[];
+}) {
+  const [selected, setSelected] = React.useState<FormFieldRow | null>(null);
+  const [activeItem, setActiveItem] = React.useState<FormFieldRow | null>(null);
+  const [formContent, setFormContent] = React.useState<FormFieldRow[]>(formFields);
   const sensors = useFieldSensors();
   useAutosave({
     interval: 1000,
     data: formContent,
     onSave: async (data) => {
-      await dbUpdateFormContent(form.id, data);
+      await dbUpdateFormFields(data);
     },
   });
 
-  function handleDragEnd(event: DragEndEvent) {
+  async function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
-    const data = active.data.current as { type: string; field: FormField };
     setActiveItem(null);
+    const { type } = active.data.current as { type: string };
 
-    if (data.type === 'add-form-field' && over !== null) {
+    if (type === 'add-form-field' && over !== null) {
       const overData = over.data.current as { index: number };
+      const data = active.data.current as { type: string; field: FormField };
       const overIndex = overData.index;
-      console.log(overIndex);
-
-      setFormContent((content) => {
-        const newContent = [...content];
-        newContent.splice(overIndex, 0, data.field);
-        return newContent;
+      const newFormFieldRow = await dbCreateFormField({
+        content: data.field,
+        formId: form.id,
+        position: overIndex,
       });
+      if (newFormFieldRow !== undefined) {
+        console.log(overIndex);
+
+        //insert at index overindex
+        setFormContent((items) => {
+          const newItems = [...items];
+          newItems.splice(overIndex, 0, newFormFieldRow);
+          return newItems;
+        });
+      }
     } else {
       const { active, over } = event;
       const activeData = active.data.current as { index: number };
@@ -59,7 +74,7 @@ export default function FormEditor({ form }: { form: Form }) {
   }
   function handleDragStart(event: DragEndEvent) {
     const { active } = event;
-    const data = active.data.current as { type: string; field: FormField };
+    const data = active.data.current as { type: string; field: FormFieldRow };
 
     if (data.type === 'add-form-field') {
       setActiveItem(data.field);
@@ -118,7 +133,7 @@ export default function FormEditor({ form }: { form: Form }) {
               <div className="py-6" />
             )}
             <SortableContext
-              items={formContent.map((_, index) => index.toString())}
+              items={formContent.map((content) => content.id)}
               strategy={verticalListSortingStrategy}
             >
               {formContent.map((item, index) => (
@@ -135,7 +150,7 @@ export default function FormEditor({ form }: { form: Form }) {
                     >
                       <GenericFormField
                         key={index}
-                        content={item}
+                        formField={item}
                         setField={(field) =>
                           setFormContent((content) => {
                             const newContent = [...content];
@@ -151,7 +166,7 @@ export default function FormEditor({ form }: { form: Form }) {
                       id={index.toString()}
                       key={index + 'droppable'}
                       className="bg-main-700 py-2 flex items-center"
-                      data={{ index: index }}
+                      data={{ index: index + 1 }}
                     >
                       <div className="flex-1 h-[1px] bg-main-600" />
                       <div className="border border-main-600 rounded-full p-2">

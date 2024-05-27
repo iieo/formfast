@@ -1,22 +1,22 @@
-import { FormField } from '@/forms/forms';
-import ShortInput from './edit-form-field/short-input-form-field';
+import { FormFieldRow } from '@/db/types';
 import HeadingFormField from './edit-form-field/heading-form-field';
+import ShortInput from './edit-form-field/short-input-form-field';
 import Submit from './edit-form-field/submit-form-field';
 
 function GenericFormField({
-  content,
+  formField,
   setField,
 }: {
-  content: FormField;
-  setField: (field: FormField) => void;
+  formField: FormFieldRow;
+  setField: (field: FormFieldRow) => void;
 }) {
-  switch (content.type) {
+  switch (formField.content.type) {
     case 'heading':
-      return <HeadingFormField setField={setField} content={content} />;
+      return <HeadingFormField setField={setField} formField={formField} />;
     case 'short-text':
-      return <ShortInput setField={setField} content={content} />;
+      return <ShortInput setField={setField} formField={formField} />;
     case 'submit':
-      return <Submit setField={setField} content={content} />;
+      return <Submit setField={setField} formField={formField} />;
   }
 }
 

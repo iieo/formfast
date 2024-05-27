@@ -1,5 +1,5 @@
-import { FormContent } from '@/forms/forms';
-import { json, pgEnum, pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core';
+import { FormField } from '@/forms/forms';
+import { integer, json, pgEnum, pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core';
 import { z } from 'zod';
 
 export const userTable = pgTable('user', {
@@ -22,7 +22,16 @@ export const formTable = pgTable('form', {
   createdBy: uuid('created_by')
     .notNull()
     .references(() => userTable.id),
-  content: json('content').$type<FormContent>().notNull(),
+  updatedAt: timestamp('updated_at', { mode: 'date' }).defaultNow().notNull(),
+  createdAt: timestamp('created_at', { mode: 'date' }).defaultNow().notNull(),
+});
+export const formFieldTable = pgTable('form_field', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  formId: uuid('form_id')
+    .notNull()
+    .references(() => formTable.id),
+  content: json('content').$type<FormField>().notNull(),
+  position: integer('position').notNull(),
   updatedAt: timestamp('updated_at', { mode: 'date' }).defaultNow().notNull(),
   createdAt: timestamp('created_at', { mode: 'date' }).defaultNow().notNull(),
 });

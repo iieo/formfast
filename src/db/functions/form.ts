@@ -2,9 +2,8 @@
 
 import { eq } from 'drizzle-orm';
 import { db } from '..';
-import { formTable, userFormMappingTable } from '../schema';
-import { FormContent } from '@/forms/forms';
-import { FormStatus } from '../types';
+import { formFieldTable, formTable, userFormMappingTable } from '../schema';
+import { FormFieldInsert, FormFieldRow, FormStatus } from '../types';
 
 export async function dbGetFormsByUserId(userId: string) {
   return db
@@ -18,6 +17,10 @@ export async function dbGetFormById(formId: string) {
   return (await db.select().from(formTable).where(eq(formTable.id, formId)).limit(1))[0];
 }
 
+export async function dbGetFormFieldsByFormId(formId: string) {
+  return db.select().from(formFieldTable).where(eq(formFieldTable.formId, formId));
+}
+
 export async function dbCreateForm(userId: string, name: string) {
   const form = (
     await db
@@ -26,7 +29,6 @@ export async function dbCreateForm(userId: string, name: string) {
         status: 'active',
         name: name,
         createdBy: userId,
-        content: [],
       })
       .returning()
   )[0];
@@ -36,9 +38,18 @@ export async function dbCreateForm(userId: string, name: string) {
   await db.insert(userFormMappingTable).values({ userId, formId: form.id });
   return form.id;
 }
-
-export async function dbUpdateFormContent(formId: string, content: FormContent) {
-  await db.update(formTable).set({ content }).where(eq(formTable.id, formId));
+export async function dbCreateFormField(content: FormFieldInsert) {
+  return (await db.insert(formFieldTable).values(content).returning())[0];
+}
+export async function dbUpdateFormFields(formFields: FormFieldRow[]) {
+  await db.transaction(async (tx) => {
+    for (const newFormField of formFields) {
+      await tx
+        .update(formFieldTable)
+        .set(newFormField)
+        .where(eq(formFieldTable.id, newFormField.id));
+    }
+  });
 }
 
 export async function dbUpdateFormStatus(formId: string, status: FormStatus) {

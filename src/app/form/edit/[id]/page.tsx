@@ -1,5 +1,5 @@
 import FormEditor from '@/components/form/form-editor';
-import { dbGetFormById, dbUpdateFormContent } from '@/db/functions/form';
+import { dbGetFormById, dbGetFormFieldsByFormId } from '@/db/functions/form';
 import { buttonClassName } from '@/utils/tailwind/button';
 import Link from 'next/link';
 import { z } from 'zod';
@@ -35,6 +35,8 @@ export default async function ChatHome(context: unknown) {
     );
   }
 
+  const formFields = await dbGetFormFieldsByFormId(form.id);
+
   // await dbUpdateFormContent(form.id, [
   //   { required: false, type: 'heading', title: 'test', subtitle: 'tests' },
   //   { required: false, type: 'heading', title: 'test2', subtitle: 'test2s' },
@@ -42,5 +44,5 @@ export default async function ChatHome(context: unknown) {
   //   { required: false, type: 'submit', buttonText: 'Submit' },
   // ]);
 
-  return <FormEditor form={form} />;
+  return <FormEditor form={form} formFields={formFields} />;
 }

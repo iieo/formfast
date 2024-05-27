@@ -1,20 +1,22 @@
-import { FormField, HeadingFormFieldProps, SubmitFormFieldProps } from '@/forms/forms';
+import { FormFieldRow } from '@/db/types';
+import { SubmitFormFieldProps } from '@/forms/forms';
 import { buttonClassName } from '@/utils/tailwind/button';
 import { cw } from '@/utils/tailwind/utils';
 
 export default function Submit({
-  content,
+  formField,
   setField,
 }: {
-  content: SubmitFormFieldProps;
-  setField: (field: FormField) => void;
+  formField: FormFieldRow;
+  setField: (field: FormFieldRow) => void;
 }) {
+  const content = formField.content as SubmitFormFieldProps;
   return (
     <div className="p-12 rounded focus-within:outline outline-2 outline-main-700 flex justify-center items-center w-full">
       <input
         className={cw(buttonClassName, 'text-center')}
         onChange={(e) => {
-          setField({ ...content, buttonText: e.target.value });
+          setField({ ...formField, content: { ...content, buttonText: e.target.value } });
         }}
         defaultValue={content.buttonText}
       />
