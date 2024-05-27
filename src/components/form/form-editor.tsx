@@ -10,7 +10,14 @@ import useAutosave from '@/utils/hooks/useAutosave';
 import { cw } from '@/utils/tailwind/utils';
 import { DndContext, DragEndEvent } from '@dnd-kit/core';
 import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
-import { BellIcon, MixIcon, PlusIcon, TimerIcon, TrashIcon } from '@radix-ui/react-icons';
+import {
+  BellIcon,
+  MixIcon,
+  PlusIcon,
+  Share1Icon,
+  TimerIcon,
+  TrashIcon,
+} from '@radix-ui/react-icons';
 import React from 'react';
 import Header from '../common/header';
 import Droppable from '../dnd/droppable';
@@ -19,6 +26,8 @@ import { useFieldSensors } from '../dnd/useFieldSensors';
 import AddFormFieldDraggable from './add-form-field-draggable';
 import GenericEditFormField from './generic-edit-form-field';
 import { FormField } from '@/forms/forms';
+import toast from 'react-hot-toast';
+import { buttonClassName } from '@/utils/tailwind/button';
 
 export default function FormEditor({
   form,
@@ -92,9 +101,22 @@ export default function FormEditor({
     }
   }
 
+  async function shareForm() {
+    const url = `${window.location.origin}/form/${form.id}`;
+    await navigator.clipboard.writeText(url);
+    toast.success('Copied to clipboard');
+  }
+
   return (
     <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart} sensors={sensors}>
-      <Header title="Edit Form" />
+      <Header
+        title="Edit Form"
+        trailing={
+          <button onClick={shareForm}>
+            <Share1Icon />
+          </button>
+        }
+      />
 
       <div className="flex h-[calc(100dvh-4rem)]">
         <div className="flex flex-col text-white min-w-[15rem] bg-main-800 items-center ">
@@ -202,6 +224,10 @@ export default function FormEditor({
               ))}
             </SortableContext>
           </div>
+          <button onClick={shareForm} className={cw(buttonClassName, 'mt-12')}>
+            <Share1Icon className="text-white" />
+            <p className="text-white">Share</p>
+          </button>
         </div>
       </div>
     </DndContext>
