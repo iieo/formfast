@@ -3,7 +3,7 @@ import { SubmitFormFieldProps } from '@/forms/forms';
 import { buttonClassName } from '@/utils/tailwind/button';
 import { cw } from '@/utils/tailwind/utils';
 
-export default function Submit({
+export default function EditSubmit({
   formField,
   setField,
 }: {

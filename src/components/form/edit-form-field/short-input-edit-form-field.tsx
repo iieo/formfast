@@ -1,7 +1,7 @@
 import { FormFieldRow } from '@/db/types';
 import { ShortTextFormFieldProps } from '@/forms/forms';
 
-export default function ShortInput({
+export default function EditShortInput({
   formField,
   setField,
 }: {

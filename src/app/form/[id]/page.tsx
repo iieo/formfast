@@ -1,4 +1,5 @@
 import FormEditor from '@/components/form/form-editor';
+import FormSolver from '@/components/form/form-solver';
 import { dbGetFormById, dbGetFormFieldsByFormId } from '@/db/functions/form';
 import { getUser } from '@/utils/auth';
 import { buttonClassName } from '@/utils/tailwind/button';
@@ -35,17 +36,6 @@ export default async function Page(context: unknown) {
       </div>
     );
   }
-  const user = await getUser();
-
-  if (form.createdBy !== user.id) {
-    <div className="flex-1 flex flex-col gap-2 items-center justify-center">
-      <h3 className="text-white text-2xl">Permission denied</h3>
-      <p className="text-white text-lg">This is not your form</p>
-      <Link href="/" className={buttonClassName}>
-        Back
-      </Link>
-    </div>;
-  }
 
   const formFields = await dbGetFormFieldsByFormId(form.id);
 
@@ -56,5 +46,5 @@ export default async function Page(context: unknown) {
   //   { required: false, type: 'submit', buttonText: 'Submit' },
   // ]);
 
-  return <FormEditor form={form} formFields={formFields} />;
+  return <FormSolver form={form} formFields={formFields} />;
 }

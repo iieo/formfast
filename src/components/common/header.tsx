@@ -2,7 +2,7 @@ import { UserRow } from '@/db/types';
 import { AvatarIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 
-function Header({ user, title }: { user?: UserRow; title: string }) {
+function Header({ user, title }: { user?: UserRow; title?: string }) {
   return (
     <div className="flex items-center justify-between px-8 border-b border-main-700 min-h-[4rem] max-h-[4rem]">
       <Link href="/" className="text-lg font-bold text-white">

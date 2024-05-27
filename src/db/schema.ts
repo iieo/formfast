@@ -1,4 +1,4 @@
-import { FormField } from '@/forms/forms';
+import { FormField, FormSubmission } from '@/forms/forms';
 import { integer, json, pgEnum, pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core';
 import { z } from 'zod';
 
@@ -33,6 +33,15 @@ export const formFieldTable = pgTable('form_field', {
   content: json('content').$type<FormField>().notNull(),
   position: integer('position').notNull(),
   updatedAt: timestamp('updated_at', { mode: 'date' }).defaultNow().notNull(),
+  createdAt: timestamp('created_at', { mode: 'date' }).defaultNow().notNull(),
+});
+
+export const formSubmissionTable = pgTable('form_submission', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  formId: uuid('form_id')
+    .notNull()
+    .references(() => formTable.id),
+  data: json('data').$type<FormSubmission>().notNull(),
   createdAt: timestamp('created_at', { mode: 'date' }).defaultNow().notNull(),
 });
 

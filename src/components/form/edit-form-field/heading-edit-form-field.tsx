@@ -1,7 +1,7 @@
 import { FormFieldRow } from '@/db/types';
 import { HeadingFormFieldProps } from '@/forms/forms';
 
-export default function HeadingFormField({
+export default function EditHeadingFormField({
   formField,
   setField,
 }: {

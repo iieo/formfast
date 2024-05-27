@@ -17,7 +17,7 @@ import Droppable from '../dnd/droppable';
 import SortableDraggable from '../dnd/sortable-draggable';
 import { useFieldSensors } from '../dnd/useFieldSensors';
 import AddFormFieldDraggable from './add-form-field-draggable';
-import GenericFormField from './generic-form-field';
+import GenericEditFormField from './generic-edit-form-field';
 import { FormField } from '@/forms/forms';
 
 export default function FormEditor({
@@ -127,7 +127,7 @@ export default function FormEditor({
           />
         </div>
         <div className="flex flex-col items-center p-12 flex-grow overflow-y-auto">
-          <div className="rouded bg-main-800 w-full max-w-[50rem] p-4 flex flex-col gap-2">
+          <div className="rounded bg-main-800 w-full max-w-[50rem] p-4 flex flex-col gap-2">
             {activeItem ? (
               <Droppable
                 id={'startitem'}
@@ -159,7 +159,7 @@ export default function FormEditor({
                       onClick={() => setSelected(item)}
                       className={cw(selected === item && 'bg-main-700 ', 'w-full relative')}
                     >
-                      <GenericFormField
+                      <GenericEditFormField
                         key={index}
                         formField={item}
                         setField={(field) =>

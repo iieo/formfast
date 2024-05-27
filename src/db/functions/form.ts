@@ -2,8 +2,9 @@
 
 import { eq } from 'drizzle-orm';
 import { db } from '..';
-import { formFieldTable, formTable, userFormMappingTable } from '../schema';
+import { formFieldTable, formSubmissionTable, formTable, userFormMappingTable } from '../schema';
 import { FormFieldInsert, FormFieldRow, FormStatus } from '../types';
+import { FormSubmission } from '@/forms/forms';
 
 export async function dbGetFormsByUserId(userId: string) {
   return db
@@ -62,4 +63,14 @@ export async function dbUpdateFormStatus(formId: string, status: FormStatus) {
 
 export async function dbDeleteFormById(formId: string) {
   await db.delete(formTable).where(eq(formTable.id, formId));
+}
+
+export async function dbCreateSubmission(formId: string, submissionContent: FormSubmission) {
+  return await db
+    .insert(formSubmissionTable)
+    .values({
+      formId: formId,
+      data: submissionContent,
+    })
+    .returning();
 }
