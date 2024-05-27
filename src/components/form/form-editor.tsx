@@ -139,8 +139,8 @@ export default function FormEditor({
               {formContent.map((item, index) => (
                 <>
                   <SortableDraggable
-                    id={index.toString()}
-                    key={index.toString()}
+                    id={item.id}
+                    key={item.id}
                     data={{ type: 'form-field', formField: item, index: index }}
                   >
                     <button
@@ -163,8 +163,8 @@ export default function FormEditor({
                   </SortableDraggable>
                   {activeItem ? (
                     <Droppable
-                      id={index.toString()}
-                      key={index + 'droppable'}
+                      id={item.id + 'droppable'}
+                      key={item.id + 'droppable'}
                       className="bg-main-700 py-2 flex items-center"
                       data={{ index: index + 1 }}
                     >
