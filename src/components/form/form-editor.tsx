@@ -1,5 +1,10 @@
 'use client';
-import { dbCreateFormField, dbUpdateFormFields } from '@/db/functions/form';
+import {
+  dbCreateFormField,
+  dbDeleteFormById,
+  dbDeleteFormFieldById,
+  dbUpdateFormFields,
+} from '@/db/functions/form';
 import { FormFieldRow, FormRow } from '@/db/types';
 import useAutosave from '@/utils/hooks/useAutosave';
 import { cw } from '@/utils/tailwind/utils';
@@ -29,11 +34,14 @@ export default function FormEditor({
   useAutosave({
     data: formContent,
     onSave: async (data) => {
+      console.log(formContent.length, data.length);
+
       await dbUpdateFormFields(data);
     },
   });
 
-  function handleDelete(index: number) {
+  async function handleDelete(index: number, item: FormFieldRow) {
+    await dbDeleteFormFieldById(item.id);
     setFormContent((content) => {
       const newContent = [...content];
       newContent.splice(index, 1);
@@ -165,7 +173,7 @@ export default function FormEditor({
                       {selected === item && (
                         <div className="absolute bottom-2 right-[50%] translate-x-[50%] text-white">
                           <button
-                            onClick={() => handleDelete(index)}
+                            onClick={() => handleDelete(index, item)}
                             className="p-2 rounded-full bg-red-900"
                           >
                             <TrashIcon className=" text-white h-5 w-5" />

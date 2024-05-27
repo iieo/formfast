@@ -52,6 +52,10 @@ export async function dbUpdateFormFields(formFields: FormFieldRow[]) {
   });
 }
 
+export async function dbDeleteFormFieldById(formFieldId: string) {
+  await db.delete(formFieldTable).where(eq(formFieldTable.id, formFieldId));
+}
+
 export async function dbUpdateFormStatus(formId: string, status: FormStatus) {
   await db.update(formTable).set({ status }).where(eq(formTable.id, formId));
 }
