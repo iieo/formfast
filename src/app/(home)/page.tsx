@@ -9,7 +9,7 @@ export default async function ChatHome(context: unknown) {
       {forms.map((form) => (
         <Link
           key={form.id}
-          href={`/form/edit/${form.id}`}
+          href={`/form/${form.id}/edit`}
           className="w-full h-[10rem] border rounded flex items-center justify-center bg-main-800 hover:bg-main-700 transition-colors"
         >
           <p className="text-centerr text-xl">{form.name}</p>

@@ -4,7 +4,7 @@ import { eq } from 'drizzle-orm';
 import { db } from '..';
 import { formFieldTable, formSubmissionTable, formTable, userFormMappingTable } from '../schema';
 import { FormFieldInsert, FormFieldRow, FormStatus } from '../types';
-import { FormSubmission } from '@/forms/forms';
+import { FieldSubmission } from '@/forms/forms';
 
 export async function dbGetFormsByUserId(userId: string) {
   return db
@@ -65,7 +65,7 @@ export async function dbDeleteFormById(formId: string) {
   await db.delete(formTable).where(eq(formTable.id, formId));
 }
 
-export async function dbCreateSubmission(formId: string, submissionContent: FormSubmission) {
+export async function dbCreateSubmission(formId: string, submissionContent: FieldSubmission[]) {
   return await db
     .insert(formSubmissionTable)
     .values({
@@ -73,4 +73,8 @@ export async function dbCreateSubmission(formId: string, submissionContent: Form
       data: submissionContent,
     })
     .returning();
+}
+
+export async function dbGetFormSubmissionsByFormId(formId: string) {
+  return db.select().from(formSubmissionTable).where(eq(formSubmissionTable.formId, formId));
 }

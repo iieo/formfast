@@ -23,7 +23,7 @@ export type SubmitFormFieldProps = CommonFormProps & {
   buttonText: string;
 };
 
-export type FormSubmission = {
+export type FieldSubmission = {
   formFieldId: string;
-  value: any;
+  value: string | undefined;
 };

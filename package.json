@@ -38,6 +38,7 @@
     "@stripe/react-stripe-js": "2.7.1",
     "@stripe/stripe-js": "3.4.0",
     "@t3-oss/env-nextjs": "0.10.1",
+    "@tanstack/react-table": "^8.17.3",
     "@types/mixpanel-browser": "2.49.0",
     "bcrypt": "5.1.1",
     "class-variance-authority": "0.7.0",

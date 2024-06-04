@@ -1,10 +1,11 @@
 'use client';
 
-import { FormFieldRow, FormRow } from '@/db/types';
+import { FormFieldRow, FormRow, FormSubmissionRow } from '@/db/types';
 import { useForm } from 'react-hook-form';
 import GenericFormField from './generic-form-field';
 import { useRouter } from 'next/navigation';
 import { dbCreateSubmission } from '@/db/functions/form';
+import { FieldSubmission } from '@/forms/forms';
 
 export default function FormSolver({
   form,
@@ -15,8 +16,8 @@ export default function FormSolver({
 }) {
   const { register, handleSubmit } = useForm();
   const router = useRouter();
-  const onSubmit = async (data: any) => {
-    data = Object.keys(data)
+  const onSubmit = async (data: { [key: string]: string }) => {
+    const submissionData: FieldSubmission[] = Object.keys(data)
       .map((key) => {
         return {
           formFieldId: key,
@@ -25,7 +26,7 @@ export default function FormSolver({
       })
       .filter((item) => !!item.value);
 
-    await dbCreateSubmission(form.id, data);
+    await dbCreateSubmission(form.id, submissionData);
 
     //TODO: save id to localstorage
 
