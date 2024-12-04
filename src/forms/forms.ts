@@ -1,4 +1,4 @@
-export type FormField = ShortTextFormFieldProps | HeadingFormFieldProps | SubmitFormFieldProps;
+export type FormFieldProps = ShortTextFormFieldProps | HeadingFormFieldProps | SubmitFormFieldProps;
 
 export type FormFieldType = 'heading' | 'short-text' | 'submit';
 

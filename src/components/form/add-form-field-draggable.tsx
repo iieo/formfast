@@ -1,6 +1,6 @@
 'use client';
 
-import { FormField } from '@/forms/forms';
+import { FormFieldProps } from '@/forms/forms';
 import Draggable from '../dnd/draggable';
 
 export default function AddFormFieldDraggable({
@@ -12,7 +12,7 @@ export default function AddFormFieldDraggable({
   id: string;
   title: string;
   icon: React.ReactNode;
-  formField: FormField;
+  formField: FormFieldProps;
 }) {
   return (
     <Draggable id={id} className="w-full" data={{ type: 'add-form-field', field: formField }}>

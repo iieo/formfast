@@ -65,7 +65,7 @@ export default function FormSubmissionsView({
 
   return (
     <div className="overflow-auto">
-      <table className="text-white bg-main-800">
+      <table className="text-white bg-main-800 min-w-[100dvw]">
         <thead className="">
           {table.getHeaderGroups().map((headerGroup) => {
             return (
@@ -88,7 +88,7 @@ export default function FormSubmissionsView({
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
               {row.getVisibleCells().map((cell) => (
-                <td key={cell.id} className="pr-4 py-4 border-t border-l">
+                <td key={cell.id} className="p-4 border-t border-l">
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}

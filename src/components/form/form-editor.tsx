@@ -25,7 +25,7 @@ import SortableDraggable from '../dnd/sortable-draggable';
 import { useFieldSensors } from '../dnd/useFieldSensors';
 import AddFormFieldDraggable from './add-form-field-draggable';
 import GenericEditFormField from './generic-edit-form-field';
-import { FormField } from '@/forms/forms';
+import { FormFieldProps } from '@/forms/forms';
 import toast from 'react-hot-toast';
 import { buttonClassName } from '@/utils/tailwind/button';
 
@@ -65,7 +65,7 @@ export default function FormEditor({
 
     if (type === 'add-form-field' && over !== null) {
       const overData = over.data.current as { index: number };
-      const data = active.data.current as { type: string; field: FormField };
+      const data = active.data.current as { type: string; field: FormFieldProps };
       const overIndex = overData.index;
       const newFormFieldRow = await dbCreateFormField({
         content: data.field,
