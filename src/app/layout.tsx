@@ -10,7 +10,6 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',

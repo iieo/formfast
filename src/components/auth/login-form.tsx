@@ -31,7 +31,7 @@ export default function LoginForm() {
     });
     console.info({ result });
     if (result === undefined || result.ok) {
-      router.refresh();
+      router.push('/');
     } else {
       setError('password', {
         type: 'manual',

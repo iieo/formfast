@@ -2,10 +2,11 @@
 
 import { FormFieldRow, FormRow } from '@/db/types';
 import { useForm } from 'react-hook-form';
-import GenericFormField from '../../../components/form/generic-form-field';
+
 import { useRouter } from 'next/navigation';
 import { dbCreateSubmission } from '@/db/functions/form';
 import { FieldSubmission } from '@/forms/forms';
+import GenericFormField from '@/components/form/generic-form-field';
 
 export default function FormSolver({
   form,
@@ -32,11 +33,11 @@ export default function FormSolver({
   };
 
   return (
-    <div className="flex flex-col items-center p-6 md:p-12 flex-grow min-h-screen bg-main-900 overflow-y-auto">
+    <div className="flex flex-col items-center p-6 md:p-12 flex-grow min-h-screen bg-main-900">
       <div className="w-full max-w-3xl my-8">
         <div className="bg-indigo-800 text-white py-10 px-8 rounded-t-lg">
           <h1 className="text-2xl font-semibold mb-2">{form.name || "Untitled Form"}</h1>
-          {form.status && <p className="text-indigo-200">{form.status}</p>}
+          {form.name && <p className="text-indigo-200">{form.name}</p>}
         </div>
 
         <div className="bg-main-800 rounded-b-lg shadow-md border border-main-700">
@@ -67,7 +68,7 @@ export default function FormSolver({
         </div>
 
         <div className="mt-4 text-center text-gray-400 text-sm">
-          <p>Powered by FormFast</p>
+          <p>Powered by Your Form Service</p>
         </div>
       </div>
     </div>

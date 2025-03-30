@@ -3,9 +3,14 @@
 import { signOut } from 'next-auth/react';
 import React from 'react';
 
-export default function Page() {
+export default function Logout() {
   React.useEffect(() => {
-    signOut();
+    signOut({ callbackUrl: '/login' });
   }, []);
-  return null;
+
+  return (
+    <div className="flex items-center justify-center min-h-screen">
+      <p>Logging out...</p>
+    </div>
+  );
 }
