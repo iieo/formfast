@@ -3,28 +3,14 @@ import { dbGetFormById, dbGetFormFieldsByFormId } from '@/db/functions/form';
 import { getUser } from '@/auth/utilts';
 import { buttonClassName } from '@/utils/tailwind/button';
 import Link from 'next/link';
-import { z } from 'zod';
 
-const pageContextSchema = z.object({
-  params: z.object({
-    id: z.coerce.string().min(1),
-  }),
-});
 
-export default async function Page(context: unknown) {
-  const result = pageContextSchema.safeParse(context);
 
-  if (!result.success) {
-    return (
-      <div className="flex flex-col justify-center items-center flex-grow h-[calc(100dvh-3rem-2rem)] w-full px-12">
-        <h1>Error</h1>
-        <p>This form does not exist</p>
-      </div>
-    );
-  }
 
-  const { id } = result.data.params;
-  const form = await dbGetFormById(id);
+export default async function Page({ params }: { params: Promise<{ id: string }> }) {
+  const { id: formId } = await params;
+
+  const form = await dbGetFormById(formId);
   if (!form) {
     return (
       <div className="flex-1 flex flex-col gap-2 items-center justify-center">

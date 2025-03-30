@@ -2,7 +2,7 @@ import { getUser } from '@/auth/utilts';
 import { dbGetFormsByUserId } from '@/db/functions/form';
 
 import Link from 'next/link';
-export default async function ChatHome(context: unknown) {
+export default async function Home(context: unknown) {
   const user = await getUser();
   const forms = await dbGetFormsByUserId();
   return (

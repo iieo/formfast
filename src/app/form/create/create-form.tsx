@@ -26,7 +26,7 @@ export default function CreateForm() {
       name = 'Form';
     }
     const formId = await dbCreateForm(name);
-    router.push(`/form/edit/${formId}`);
+    router.push(`/form/${formId}/edit`);
   }
   return (
     <div className="flex-1 flex items-center justify-center">
