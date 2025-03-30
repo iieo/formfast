@@ -1,4 +1,4 @@
-import FormEditor from '@/components/form/form-editor';
+import FormEditor from '@/app/form/[id]/edit/form-editor';
 import { dbGetFormById, dbGetFormFieldsByFormId } from '@/db/functions/form';
 import { getUser } from '@/auth/utilts';
 import { buttonClassName } from '@/utils/tailwind/button';
@@ -34,13 +34,6 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   }
 
   const formFields = await dbGetFormFieldsByFormId(form.id);
-
-  // await dbUpdateFormContent(form.id, [
-  //   { required: false, type: 'heading', title: 'test', subtitle: 'tests' },
-  //   { required: false, type: 'heading', title: 'test2', subtitle: 'test2s' },
-  //   { required: false, type: 'short-text', label: 'test2', sublabel: 'test2s' },
-  //   { required: false, type: 'submit', buttonText: 'Submit' },
-  // ]);
 
   return <FormEditor form={form} formFields={formFields} />;
 }

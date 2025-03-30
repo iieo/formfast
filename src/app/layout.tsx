@@ -3,10 +3,13 @@ import './globals.css';
 import { Inter } from 'next/font/google';
 import { Toaster } from 'react-hot-toast';
 
-export const metadata: Metadata = {
-  title: 'FastForm',
-  description: 'Erstelle deine eigenen Forms',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: 'FormFast',
+    description: 'Erstelle deine eigenen Forms',
+  };
+}
+
 
 const inter = Inter({
   subsets: ['latin'],
@@ -16,7 +19,7 @@ const inter = Inter({
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={inter.className}>
-      <body>
+      <body className="h-[100dvh] w-[100dvw] overflow-hidden bg-main-900 flex flex-col">
         {children}
         <Toaster />
       </body>

@@ -1,4 +1,4 @@
-import FormEditor from '@/components/form/form-editor';
+import FormEditor from '@/app/form/[id]/edit/form-editor';
 import FormSubmissionsView from '@/app/form/[id]/view/form-submissions-view';
 import {
   dbGetFormById,
