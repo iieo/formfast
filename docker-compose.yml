@@ -22,20 +22,20 @@ services:
       retries: 5
       start_period: 30s
 
-  web:
-    image: iieo/formfast:${COMMIT_HASH}
-    container_name: formfast
-    ports:
-      - '0.0.0.0:3000:3000'
-    networks:
-      - postgres_network
-    restart: always
-    healthcheck:
-      test: ['CMD-SHELL', 'curl -f http://localhost:3000/health || exit 1']
-      interval: 10s
-      timeout: 10s
-      retries: 3
-      start_period: 10s
+  # web:
+  #   image: iieo/formfast:${COMMIT_HASH}
+  #   container_name: formfast
+  #   ports:
+  #     - '0.0.0.0:3000:3000'
+  #   networks:
+  #     - postgres_network
+  #   restart: always
+  #   healthcheck:
+  #     test: ['CMD-SHELL', 'curl -f http://localhost:3000/health || exit 1']
+  #     interval: 10s
+  #     timeout: 10s
+  #     retries: 3
+  #     start_period: 10s
 
 networks:
   postgres_network:

@@ -6,7 +6,7 @@ import {
   dbGetFormFieldsByFormId,
   dbGetFormSubmissionsByFormId,
 } from '@/db/functions/form';
-import { getUser } from '@/utils/auth';
+import { getUser } from '@/auth/utilts';
 import { buttonClassName } from '@/utils/tailwind/button';
 import Link from 'next/link';
 import { z } from 'zod';

@@ -1,8 +1,9 @@
+import { getMaybeUser, getUser } from '@/auth/utilts';
 import Header from '@/components/navigation/header';
 import ProfileMenu from '@/components/navigation/profile-menu';
 import CollapsibleSidebar from '@/components/navigation/sidebar/collaptible-sidebar';
 import { SidebarVisibilityProvider } from '@/components/navigation/sidebar/sidebar-provider';
-import { getUser } from '@/utils/auth';
+
 import { buttonClassName } from '@/utils/tailwind/button';
 import { cw } from '@/utils/tailwind/utils';
 import { PlusIcon } from '@radix-ui/react-icons';
@@ -22,7 +23,7 @@ export default async function ChatLayout({ children }: { children: React.ReactNo
               <p className="text-center text-lg font-semibold">Create new Form</p>
             </Link>
             <div className="flex-grow"></div>
-            <ProfileMenu {...user} />
+            <ProfileMenu user={user} />
           </div>
         </CollapsibleSidebar>
         <div className="flex flex-col justify-center items-center w-full">

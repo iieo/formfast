@@ -1,6 +1,6 @@
 'use client';
 import { dbCreateForm } from '@/db/functions/form';
-import { getUser } from '@/utils/auth';
+import { getUser } from '@/auth/utilts';
 import { buttonClassName } from '@/utils/tailwind/button';
 import { inputClassName } from '@/utils/tailwind/input';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -25,8 +25,7 @@ export default function CreateForm() {
     if (!name) {
       name = 'Form';
     }
-    const user = await getUser();
-    const formId = await dbCreateForm(user.id, name);
+    const formId = await dbCreateForm(name);
     router.push(`/form/edit/${formId}`);
   }
   return (

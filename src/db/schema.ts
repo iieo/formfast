@@ -12,6 +12,8 @@ export const userTable = pgTable('user', {
   createdAt: timestamp('created_at', { mode: 'date' }).defaultNow().notNull(),
 });
 
+export const UserRow = typeof userTable.$inferSelect;
+
 export const formStatusSchema = z.enum(['active', 'disabled', 'deleted', 'archived', 'draft']);
 export const formStatusSchemaEnum = pgEnum('form_status', formStatusSchema.options);
 

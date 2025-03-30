@@ -1,28 +1,26 @@
+import { env } from '@/env';
 import { drizzle } from 'drizzle-orm/postgres-js';
-import postgres from 'postgres';
 import { migrate } from 'drizzle-orm/postgres-js/migrator';
+import postgres from 'postgres';
 
-const databaseURI = process.env.DATABASE_URL;
+const databaseUrl = env.databaseUrl;
 
-if (databaseURI === undefined) {
-  console.log('You need to provide the database URI');
+const databaseConnection = drizzle(postgres(databaseUrl, { max: 1 }));
+
+const main = async () => {
+  try {
+    await migrate(databaseConnection, {
+      migrationsFolder: './src/db/migrations',
+    });
+    /* eslint-disable-next-line no-console */
+    console.log('Migration complete');
+  } catch (error) {
+    /* eslint-disable-next-line no-console */
+    console.log(error);
+  }
   process.exit(0);
-}
+};
 
-const client = postgres(databaseURI, { max: 1 });
-const db = drizzle(client);
-
-async function runMigrations() {
-  await migrate(db, { migrationsFolder: './src/db/migrations' });
-  await client.end();
-}
-
-runMigrations()
-  .then(() => {
-    console.info('Migration successful.');
-    process.exit(0);
-  })
-  .catch((error) => {
-    console.error({ error });
-    process.exit(1);
-  });
+main()
+  .then(() => {})
+  .catch(() => {});

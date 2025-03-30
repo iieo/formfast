@@ -5,44 +5,51 @@ import { db } from '..';
 import { formFieldTable, formSubmissionTable, formTable, userFormMappingTable } from '../schema';
 import { FormFieldInsert, FormFieldRow, FormStatus } from '../types';
 import { FieldSubmission } from '@/forms/forms';
+import { getUser } from '@/auth/utilts';
 
-export async function dbGetFormsByUserId(userId: string) {
+export async function dbGetFormsByUserId() {
+  const user = await getUser();
   return db
     .select()
     .from(formTable)
-    .where(eq(formTable.createdBy, userId))
+    .where(eq(formTable.createdBy, user.id))
     .orderBy(formTable.createdAt);
 }
 
 export async function dbGetFormById(formId: string) {
+  await getUser();
   return (await db.select().from(formTable).where(eq(formTable.id, formId)).limit(1))[0];
 }
 
 export async function dbGetFormFieldsByFormId(formId: string) {
+  await getUser();
   return db.select().from(formFieldTable).where(eq(formFieldTable.formId, formId));
 }
 
-export async function dbCreateForm(userId: string, name: string) {
+export async function dbCreateForm(name: string) {
+  const user = await getUser();
   const form = (
     await db
       .insert(formTable)
       .values({
         status: 'active',
         name: name,
-        createdBy: userId,
+        createdBy: user.id,
       })
       .returning()
   )[0];
   if (form === undefined) {
     throw new Error('Failed to create form');
   }
-  await db.insert(userFormMappingTable).values({ userId, formId: form.id });
+  await db.insert(userFormMappingTable).values({ userId: user.id, formId: form.id });
   return form.id;
 }
 export async function dbCreateFormField(content: FormFieldInsert) {
+  await getUser();
   return (await db.insert(formFieldTable).values(content).returning())[0];
 }
 export async function dbUpdateFormFields(formFields: FormFieldRow[]) {
+  await getUser();
   await db.transaction(async (tx) => {
     for (const newFormField of formFields) {
       await tx

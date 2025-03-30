@@ -1,10 +1,10 @@
-declare module 'next-auth' {
-  interface User {
-    email: string;
-  }
+import type { UserRow } from '@/db';
 
+declare module 'next-auth' {
+  /**
+   * Returned by `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
+   */
   interface Session {
-    user: { email: string };
-    accessToken: string;
+    user: UserRow | undefined;
   }
 }

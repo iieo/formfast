@@ -33,5 +33,5 @@ export function useDimensions<T extends HTMLElement>(): [Dimensions, React.RefOb
     }
   }, [ref]);
 
-  return [dimensions, ref];
+  return [dimensions, ref as React.RefObject<T>];
 }

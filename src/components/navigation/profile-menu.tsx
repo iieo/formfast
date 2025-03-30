@@ -1,4 +1,5 @@
 'use client';
+import { UserRow } from '@/db/types';
 import { cw } from '@/utils/tailwind/utils';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { AvatarIcon, ExitIcon } from '@radix-ui/react-icons';
@@ -8,13 +9,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
-type ProfileMenuProps = {
-  email: string;
-  firstName: string;
-  lastName: string;
-};
 
-export default function ProfileMenu({ email, firstName, lastName }: ProfileMenuProps) {
+export default function ProfileMenu({ user }: { user: UserRow }) {
   const router = useRouter();
   const [isOpen, setIsOpen] = React.useState(false);
   const handleLogout = async () => {
@@ -34,7 +30,7 @@ export default function ProfileMenu({ email, firstName, lastName }: ProfileMenuP
           <AvatarIcon color="white" width={25} height={25} />
           <div className="w-full text-white">
             <p className="truncate font-semibold text-left w-full">
-              {firstName} {lastName}
+              {user.firstName} {user.lastName}
             </p>
 
             <p className="truncate text-left">Kostenloser Account</p>
@@ -46,7 +42,7 @@ export default function ProfileMenu({ email, firstName, lastName }: ProfileMenuP
           sideOffset={5}
           className="z-20 flex flex-col gap-2 py-2 w-[256px] bg-main-200 rounded-[10px]"
         >
-          <p className="p-2 truncate font-semibold">{email}</p>
+          <p className="p-2 truncate font-semibold">{user.email}</p>
           <hr />
           <Link href="/settings/personal-information" className="text-start p-2">
             Account-Einstellungen
