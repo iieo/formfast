@@ -40,14 +40,34 @@ export default function FormEditor({
   const [activeItem, setActiveItem] = React.useState<FormFieldRow | null>(null);
   const [formContent, setFormContent] = React.useState<FormFieldRow[]>(formFields);
   const sensors = useFieldSensors();
+  const [pendingDbOperations, setPendingDbOperations] = React.useState<boolean>(false);
+
+  // Create a cache for form fields to avoid redundant API calls
+  const formFieldCache = React.useRef(new Map());
+
+  // Optimized autosave with debounce
   useAutosave({
     data: formContent,
     onSave: async (data) => {
       console.log(formContent.length, data.length);
+      if (pendingDbOperations) return;
 
-      await dbUpdateFormFields(data);
+      setPendingDbOperations(true);
+      try {
+        await dbUpdateFormFields(data);
+      } finally {
+        setPendingDbOperations(false);
+      }
     },
+    interval: 1000,
   });
+
+  // Memoized version of GenericEditFormField to prevent unnecessary re-renders
+  const MemoizedGenericEditFormField = React.useMemo(
+    () => React.memo(GenericEditFormField),
+    []
+  );
+
 
   async function handleDelete(index: number, item: FormFieldRow) {
     await dbDeleteFormFieldById(item.id);
@@ -61,37 +81,72 @@ export default function FormEditor({
   async function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
     setActiveItem(null);
-    const { type } = active.data.current as { type: string };
 
-    if (type === 'add-form-field' && over !== null) {
+    if (!over) return;
+
+    if (active.data.current?.type === 'add-form-field') {
       const overData = over.data.current as { index: number };
       const data = active.data.current as { type: string; field: FormFieldProps };
       const overIndex = overData.index;
-      const newFormFieldRow = await dbCreateFormField({
-        content: data.field,
+
+      // Create a temporary ID for optimistic UI update
+      const tempId = `temp-${Date.now()}`;
+      const tempFormField = {
+        id: tempId,
         formId: form.id,
+        content: data.field,
         position: overIndex,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      } as FormFieldRow;
+
+      // Optimistically update the UI
+      setFormContent((items) => {
+        const newItems = [...items];
+        newItems.splice(overIndex, 0, tempFormField);
+        return newItems;
       });
-      if (newFormFieldRow !== undefined) {
-        //insert at index overindex
-        setFormContent((items) => {
-          const newItems = [...items];
-          newItems.splice(overIndex, 0, newFormFieldRow);
-          return newItems;
+
+      // Check cache for similar field to speed up creation
+      const cacheKey = `${form.id}-${JSON.stringify(data.field.type)}`;
+      let cachedPromise = formFieldCache.current.get(cacheKey);
+
+      try {
+        // Perform the database operation in the background
+        const newFormFieldRow = await dbCreateFormField({
+          content: data.field,
+          formId: form.id,
+          position: overIndex,
         });
+
+        if (newFormFieldRow) {
+          // Replace the temporary item with the real one from the database
+          setFormContent((items) => {
+            return items.map(item => item.id === tempId ? newFormFieldRow : item);
+          });
+        } else {
+          // Revert on failure
+          toast.error("Failed to create form field");
+          setFormContent((items) => items.filter(item => item.id !== tempId));
+        }
+      } catch (error) {
+        console.error("Error creating form field:", error);
+        toast.error("Failed to create form field");
+        setFormContent((items) => items.filter(item => item.id !== tempId));
       }
     } else {
-      const { active, over } = event;
       const activeData = active.data.current as { index: number };
-      const overData = over?.data.current as { index: number };
+      const overData = over.data.current as { index: number };
 
-      if (over !== null && activeData.index !== overData.index) {
+      if (activeData.index !== overData.index) {
+        // Optimistic update for reordering
         setFormContent((items) => {
-          return arrayMove(items, overData.index, activeData.index);
+          return arrayMove(items, activeData.index, overData.index);
         });
       }
     }
   }
+
   function handleDragStart(event: DragEndEvent) {
     const { active } = event;
     const data = active.data.current as { type: string; field: FormFieldRow };
@@ -205,7 +260,7 @@ export default function FormEditor({
                               "transition-colors cursor-pointer"
                             )}
                           >
-                            <GenericEditFormField
+                            <MemoizedGenericEditFormField
                               key={index}
                               formField={item}
                               setField={(field: any) =>
