@@ -1,7 +1,6 @@
 'use client';
 
 import { ChevronLeftIcon, HamburgerMenuIcon, Share2Icon } from '@radix-ui/react-icons';
-import toast from 'react-hot-toast';
 import { useSidebarVisibility } from './sidebar/sidebar-provider';
 import Link from 'next/link';
 

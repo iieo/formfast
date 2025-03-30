@@ -4,19 +4,18 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "clean": "find . -type d \\( -name node_modules -o -name dist -o -name .next \\) -not -path \"./.vercel/*\" -prune -exec rm -rf {} \\;",
-    "build": "dotenv -e .env next build",
+    "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "types": "tsc",
     "format": "prettier --write .",
+    "types": "tsc --noEmit",
     "format:check": "prettier --check .",
+    "lint": "next lint",
+    "test": "vitest",
+    "questions": "tsx ./src/filesystem/index.ts",
+    "clean": "find . -type d \\( -name node_modules -o -name dist -o -name .next \\) -not -path \"./.vercel/*\" -prune -exec rm -rf {} \\;",
     "db:generate": "drizzle-kit generate --config=./src/db/drizzle.config.ts",
     "db:migrate": "dotenv -e .env tsx ./src/db/migrate.ts",
     "db:introspect": "dotenv -e .env -- drizzle-kit studio --config=src/db/drizzle.config.ts"
-  },
-  "engines": {
-    "pnpm": "9"
   },
   "dependencies": {
     "@aws-sdk/client-ses": "3.554.0",

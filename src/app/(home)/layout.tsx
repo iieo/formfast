@@ -1,4 +1,4 @@
-import { getMaybeUser, getUser } from '@/auth/utilts';
+import { getUser } from '@/auth/utilts';
 import Header from '@/components/navigation/header';
 import ProfileMenu from '@/components/navigation/profile-menu';
 import CollapsibleSidebar from '@/components/navigation/sidebar/collaptible-sidebar';
