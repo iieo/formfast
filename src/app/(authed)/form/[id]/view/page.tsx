@@ -1,5 +1,3 @@
-import FormEditor from '@/app/form/[id]/edit/form-editor';
-import FormSubmissionsView from '@/app/form/[id]/view/form-submissions-view';
 import {
   dbGetFormById,
   dbGetFormFieldsByFormId,
@@ -8,6 +6,7 @@ import {
 import { getUser } from '@/auth/utilts';
 import { buttonClassName } from '@/utils/tailwind/button';
 import Link from 'next/link';
+import FormSubmissionsView from './form-submissions-view';
 
 
 

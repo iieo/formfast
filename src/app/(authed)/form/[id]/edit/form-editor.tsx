@@ -19,15 +19,15 @@ import {
   TrashIcon,
 } from '@radix-ui/react-icons';
 import React from 'react';
-import Header from '../../../../components/common/header';
-import Droppable from '../../../../components/dnd/droppable';
-import SortableDraggable from '../../../../components/dnd/sortable-draggable';
-import { useFieldSensors } from '../../../../components/dnd/useFieldSensors';
-import AddFormFieldDraggable from '../../../../components/form/add-form-field-draggable';
-import GenericEditFormField from '../../../../components/form/generic-edit-form-field';
 import { FormFieldProps } from '@/forms/forms';
 import toast from 'react-hot-toast';
 import { buttonClassName } from '@/utils/tailwind/button';
+import { useFieldSensors } from '@/components/dnd/useFieldSensors';
+import AddFormFieldDraggable from '@/components/form/add-form-field-draggable';
+import Droppable from '@/components/dnd/droppable';
+import GenericEditFormField from '@/components/form/generic-edit-form-field';
+import SortableDraggable from '@/components/dnd/sortable-draggable';
+import Header from '@/components/common/header';
 
 export default function FormEditor({
   form,
@@ -208,7 +208,7 @@ export default function FormEditor({
                             <GenericEditFormField
                               key={index}
                               formField={item}
-                              setField={(field) =>
+                              setField={(field: any) =>
                                 setFormContent((content) => {
                                   const newContent = [...content];
                                   newContent[index] = field;

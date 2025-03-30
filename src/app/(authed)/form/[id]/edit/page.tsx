@@ -1,8 +1,8 @@
-import FormEditor from '@/app/form/[id]/edit/form-editor';
 import { dbGetFormById, dbGetFormFieldsByFormId } from '@/db/functions/form';
 import { getUser } from '@/auth/utilts';
 import { buttonClassName } from '@/utils/tailwind/button';
 import Link from 'next/link';
+import FormEditor from './form-editor';
 
 
 

@@ -1,10 +1,8 @@
-import FormEditor from '@/app/form/[id]/edit/form-editor';
-import FormSolver from '@/app/form/[id]/form-solver';
 import { dbGetFormById, dbGetFormFieldsByFormId } from '@/db/functions/form';
-
 import { buttonClassName } from '@/utils/tailwind/button';
 import { Metadata } from 'next';
 import Link from 'next/link';
+import FormSolver from './form-solver';
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id: formId } = await params;

@@ -1,6 +1,3 @@
-import FormEditor from '@/app/form/[id]/edit/form-editor';
-import FormSubmissionsView from '@/app/form/[id]/view/form-submissions-view';
-import FormSubmissionsView2 from '@/app/form/[id]/view2/form-submissions-view2';
 import {
   dbGetFormById,
   dbGetFormFieldsByFormId,
@@ -9,6 +6,7 @@ import {
 import { getUser } from '@/auth/utilts';
 import { buttonClassName } from '@/utils/tailwind/button';
 import Link from 'next/link';
+import FormSubmissionsView2 from './form-submissions-view2';
 
 
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
