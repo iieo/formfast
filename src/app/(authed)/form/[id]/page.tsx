@@ -19,7 +19,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   const form = await dbGetFormById(formId);
   if (!form) {
     return (
-      <div className="flex-1 flex flex-col gap-2 items-center justify-center">
+      <div className="flex-1 flex flex-col gap-2 items-center justify-center overflow-y-auto">
         <h3 className="text-white text-2xl">Invalid id</h3>
         <Link href="/" className={buttonClassName}>
           Back
