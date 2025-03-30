@@ -28,7 +28,6 @@ export default function FormSolver({
 
     await dbCreateSubmission(form.id, submissionData);
 
-    //TODO: save id to localstorage
 
     router.push('/form/thank-you');
   };
@@ -38,7 +37,7 @@ export default function FormSolver({
       <div className="rounded bg-main-800 w-full max-w-[50rem] p-4 flex flex-col gap-2">
         <form onSubmit={handleSubmit(onSubmit)}>
           {formFields.map((formField) => {
-            return <GenericFormField formField={formField} {...register(formField.id)} />;
+            return <GenericFormField key={formField.id} formField={formField} {...register(formField.id)} />;
           })}
         </form>
       </div>

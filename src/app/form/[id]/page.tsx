@@ -21,13 +21,5 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   }
 
   const formFields = await dbGetFormFieldsByFormId(form.id);
-
-  // await dbUpdateFormContent(form.id, [
-  //   { required: false, type: 'heading', title: 'test', subtitle: 'tests' },
-  //   { required: false, type: 'heading', title: 'test2', subtitle: 'test2s' },
-  //   { required: false, type: 'short-text', label: 'test2', sublabel: 'test2s' },
-  //   { required: false, type: 'submit', buttonText: 'Submit' },
-  // ]);
-
   return <FormSolver form={form} formFields={formFields} />;
 }

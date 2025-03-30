@@ -61,14 +61,17 @@ export async function dbUpdateFormFields(formFields: FormFieldRow[]) {
 }
 
 export async function dbDeleteFormFieldById(formFieldId: string) {
+  await getUser();
   await db.delete(formFieldTable).where(eq(formFieldTable.id, formFieldId));
 }
 
 export async function dbUpdateFormStatus(formId: string, status: FormStatus) {
+  await getUser();
   await db.update(formTable).set({ status }).where(eq(formTable.id, formId));
 }
 
 export async function dbDeleteFormById(formId: string) {
+  await getUser();
   await db.delete(formTable).where(eq(formTable.id, formId));
 }
 
@@ -83,5 +86,6 @@ export async function dbCreateSubmission(formId: string, submissionContent: Fiel
 }
 
 export async function dbGetFormSubmissionsByFormId(formId: string) {
+  await getUser();
   return db.select().from(formSubmissionTable).where(eq(formSubmissionTable.formId, formId));
 }
