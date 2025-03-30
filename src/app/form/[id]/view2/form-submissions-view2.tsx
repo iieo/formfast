@@ -50,8 +50,8 @@ export default function FormSubmissionsView2({
         return submissionData[formField.id] === undefined
           ? undefined
           : {
-              value: submissionData[formField.id],
-            };
+            value: submissionData[formField.id],
+          };
       });
     }),
   );
@@ -79,21 +79,3 @@ export default function FormSubmissionsView2({
     </div>
   );
 }
-
-/**
- * 
- * 
- *  const columnLabels = ["Flavour", "Food"];
-  const rowLabels = ["Item 1", "Item 2"];
-  const data = [
-    [{ value: "Vanilla" }, { value: "Chocolate" }],
-    [{ value: "Strawberry" }, { value: "Cookies" }],
-  ];
-  return (
-    <Spreadsheet
-      data={data}
-      columnLabels={columnLabels}
-      rowLabels={rowLabels}
-    />
-  );
- */

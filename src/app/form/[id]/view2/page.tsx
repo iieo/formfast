@@ -1,6 +1,6 @@
 import FormEditor from '@/components/form/form-editor';
-import FormSubmissionsView from '@/components/form/view-submissions/form-submissions-view';
-import FormSubmissionsView2 from '@/components/form/view-submissions/form-submissions-view2';
+import FormSubmissionsView from '@/app/form/[id]/view/form-submissions-view';
+import FormSubmissionsView2 from '@/app/form/[id]/view2/form-submissions-view2';
 import {
   dbGetFormById,
   dbGetFormFieldsByFormId,
