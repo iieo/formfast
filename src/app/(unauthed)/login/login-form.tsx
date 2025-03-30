@@ -41,7 +41,7 @@ export default function LoginForm() {
   };
 
   return (
-    <main className="w-full min-h-screen flex items-center justify-center bg-main-900 py-12 px-4">
+    <main className="w-full flex items-center justify-center bg-main-900 py-12 px-4">
       <div className="p-8 max-w-md flex flex-col shadow-xl rounded-lg w-full bg-main-800 border border-main-700">
         <div className="text-center mb-8">
           <h1 className="text-3xl text-indigo-400 font-bold mb-2">Anmelden</h1>
