@@ -1,6 +1,7 @@
 'use client';
 import { signIn } from 'next-auth/react';
 import React from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { z } from 'zod';
@@ -19,7 +20,9 @@ export default function LoginForm() {
     handleSubmit,
     formState: { errors },
     setError,
-  } = useForm<loginFormData>();
+  } = useForm<loginFormData>({
+    resolver: zodResolver(loginFormSchema),
+  });
   const router = useRouter();
 
   const onSubmit = async (data: loginFormData) => {

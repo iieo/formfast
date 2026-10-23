@@ -5,7 +5,7 @@ import ShortInputFormField from './solve-form-field/short-input-form-field';
 import Submit from './solve-form-field/submit-form-field';
 
 const GenericFormField = forwardRef(
-  ({ formField, ...props }: { formField: FormFieldRow }, ref: ForwardedRef<any | null>) => {
+  ({ formField, ...props }: { formField: FormFieldRow }, ref: ForwardedRef<HTMLInputElement>) => {
     switch (formField.content.type) {
       case 'heading':
         return <HeadingFormField formField={formField} {...props} />;
@@ -18,5 +18,7 @@ const GenericFormField = forwardRef(
     }
   },
 );
+
+GenericFormField.displayName = 'GenericFormField';
 
 export default GenericFormField;

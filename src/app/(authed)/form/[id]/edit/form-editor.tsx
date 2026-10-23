@@ -1,7 +1,6 @@
 'use client';
 import {
   dbCreateFormField,
-  dbDeleteFormById,
   dbDeleteFormFieldById,
   dbUpdateFormFields,
 } from '@/db/functions/form';
@@ -43,7 +42,6 @@ export default function FormEditor({
   const [pendingDbOperations, setPendingDbOperations] = React.useState<boolean>(false);
 
   // Create a cache for form fields to avoid redundant API calls
-  const formFieldCache = React.useRef(new Map());
 
   // Optimized autosave with debounce
   useAutosave({
@@ -106,10 +104,6 @@ export default function FormEditor({
         newItems.splice(overIndex, 0, tempFormField);
         return newItems;
       });
-
-      // Check cache for similar field to speed up creation
-      const cacheKey = `${form.id}-${JSON.stringify(data.field.type)}`;
-      let cachedPromise = formFieldCache.current.get(cacheKey);
 
       try {
         // Perform the database operation in the background
@@ -263,7 +257,7 @@ export default function FormEditor({
                             <MemoizedGenericEditFormField
                               key={index}
                               formField={item}
-                              setField={(field: any) =>
+                              setField={(field: FormFieldRow) =>
                                 setFormContent((content) => {
                                   const newContent = [...content];
                                   newContent[index] = field;

@@ -6,7 +6,7 @@ type DraggableProps = {
   children?: React.ReactNode;
   className?: string;
   disabled?: boolean;
-  data?: any;
+  data?: Record<string, unknown>;
 };
 
 export default function Droppable(props: DraggableProps) {

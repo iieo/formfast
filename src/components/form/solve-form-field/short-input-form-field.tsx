@@ -1,6 +1,6 @@
 import { FormFieldRow } from '@/db/types';
 import { ShortTextFormFieldProps } from '@/forms/forms';
-import React, { forwardRef, ForwardRefRenderFunction } from 'react';
+import React from 'react';
 
 interface ShortInputProps {
   formField: FormFieldRow;
@@ -26,5 +26,7 @@ const ShortInput = React.forwardRef<HTMLInputElement, ShortInputProps>(
     );
   },
 );
+
+ShortInput.displayName = 'ShortInput';
 
 export default ShortInput;

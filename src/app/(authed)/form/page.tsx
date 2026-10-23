@@ -2,7 +2,6 @@ import Header from '@/components/navigation/header';
 import ProfileMenu from '@/components/navigation/profile-menu';
 import CollapsibleSidebar from '@/components/navigation/sidebar/collaptible-sidebar';
 import { SidebarVisibilityProvider } from '@/components/navigation/sidebar/sidebar-provider';
-import { dbGetFormsByUserId } from '@/db/functions/form';
 import { getUser } from '@/auth/utilts';
 import { buttonClassName } from '@/utils/tailwind/button';
 import { cw } from '@/utils/tailwind/utils';
@@ -10,7 +9,6 @@ import { PlusIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 export default async function Page() {
   const user = await getUser();
-  const forms = await dbGetFormsByUserId();
   return (
     <SidebarVisibilityProvider>
       <CollapsibleSidebar>

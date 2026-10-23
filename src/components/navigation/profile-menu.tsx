@@ -1,6 +1,5 @@
 'use client';
 import { UserRow } from '@/db/types';
-import { cw } from '@/utils/tailwind/utils';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { AvatarIcon, ExitIcon } from '@radix-ui/react-icons';
 import clsx from 'clsx';

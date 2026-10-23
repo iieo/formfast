@@ -6,7 +6,7 @@ type MutationOptions = {
   onFailure?: () => void;
 };
 
-export function useMutation<T, Args extends any[]>(
+export function useMutation<T, Args extends unknown[]>(
   fun: (...args: Args) => Promise<T>,
   { onSuccess, onFailure }: MutationOptions,
 ) {

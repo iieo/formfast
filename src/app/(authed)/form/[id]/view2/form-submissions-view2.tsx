@@ -1,21 +1,35 @@
 'use client';
-import { FormFieldRow, FormRow, FormSubmissionRow } from '@/db/types';
-import { read } from 'fs';
+import { FormFieldRow, FormSubmissionRow } from '@/db/types';
 import React from 'react';
 
 import Spreadsheet, { Matrix } from 'react-spreadsheet';
 
 export default function FormSubmissionsView2({
-  form,
   submissions,
   formFields,
 }: {
-  form: FormRow;
   submissions: FormSubmissionRow[];
   formFields: FormFieldRow[];
 }) {
-  const firstSubmission = submissions[0];
-  if (firstSubmission === undefined) {
+  const [data, setData] = React.useState(
+    submissions.map((submission) => {
+      const submissionData = submission.data.reduce<{
+        [key: string]: string | undefined;
+      }>((acc, field) => {
+        acc[field.formFieldId] = field.value;
+        return acc;
+      }, {});
+      return formFields.map((formField) => {
+        return submissionData[formField.id] === undefined
+          ? undefined
+          : {
+            value: submissionData[formField.id],
+          };
+      });
+    }),
+  );
+
+  if (submissions.length === 0) {
     return <div>No submissions</div>;
   }
 
@@ -37,24 +51,6 @@ export default function FormSubmissionsView2({
     const name = getFieldName(formField);
     return { name, id: formField.id };
   });
-
-  const [data, setData] = React.useState(
-    submissions.map((submission) => {
-      const submissionData = submission.data.reduce<{
-        [key: string]: string | undefined;
-      }>((acc, field) => {
-        acc[field.formFieldId] = field.value;
-        return acc;
-      }, {});
-      return formFields.map((formField) => {
-        return submissionData[formField.id] === undefined
-          ? undefined
-          : {
-            value: submissionData[formField.id],
-          };
-      });
-    }),
-  );
 
   const parseMatrixToData = (
     matrix: Matrix<{

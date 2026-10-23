@@ -1,5 +1,5 @@
 'use client';
-import { FormFieldRow, FormRow, FormSubmissionRow } from '@/db/types';
+import { FormFieldRow, FormSubmissionRow } from '@/db/types';
 import {
   useReactTable,
   createColumnHelper,
@@ -8,22 +8,17 @@ import {
 } from '@tanstack/react-table';
 
 export default function FormSubmissionsView({
-  form,
   submissions,
   formFields,
 }: {
-  form: FormRow;
   submissions: FormSubmissionRow[];
   formFields: FormFieldRow[];
 }) {
   const firstSubmission = submissions[0];
-  if (firstSubmission === undefined) {
-    return <div>No submissions</div>;
-  }
   const columnHelper = createColumnHelper<{
     [key: string]: string | undefined;
   }>();
-  const columns = firstSubmission.data.map((submission) => {
+  const columns = (firstSubmission?.data ?? []).map((submission) => {
     return columnHelper.accessor(submission.formFieldId, {
       cell: (cell) => {
         return cell.getValue();
@@ -44,6 +39,10 @@ export default function FormSubmissionsView({
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
+
+  if (firstSubmission === undefined) {
+    return <div>No submissions</div>;
+  }
 
   const getFieldName = (formFieldId: string) => {
     const formField = formFields.find((field) => field.id === formFieldId);

@@ -43,7 +43,7 @@ export default function FormSolver({
         <div className="bg-main-800 rounded-b-lg shadow-md border border-main-700">
           <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
             <div className="divide-y divide-main-700">
-              {formFields.map((formField, index) => (
+              {formFields.map((formField) => (
                 <div key={formField.id} className="py-6 px-8">
                   <GenericFormField
                     formField={formField}

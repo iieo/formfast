@@ -44,5 +44,5 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   //   { required: false, type: 'submit', buttonText: 'Submit' },
   // ]);
 
-  return <FormSubmissionsView2 form={form} submissions={submissions} formFields={formFields} />;
+  return <FormSubmissionsView2 submissions={submissions} formFields={formFields} />;
 }

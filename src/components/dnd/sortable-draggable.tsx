@@ -7,7 +7,7 @@ type SortableDraggableProps = {
   children?: React.ReactNode;
   className?: string;
   disabled?: boolean;
-  data?: any;
+  data?: Record<string, unknown>;
 };
 
 export default function SortableDraggable(props: SortableDraggableProps) {
