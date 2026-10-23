@@ -8,7 +8,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
-
 export default function ProfileMenu({ user }: { user: UserRow }) {
   const router = useRouter();
   const [isOpen, setIsOpen] = React.useState(false);

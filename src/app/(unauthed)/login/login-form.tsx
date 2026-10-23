@@ -67,9 +67,7 @@ export default function LoginForm() {
                 className="border border-main-600 bg-main-700 rounded-md w-full p-3 text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
               />
             </div>
-            {errors.email && (
-              <p className="mt-1 text-sm text-red-400">{errors.email.message}</p>
-            )}
+            {errors.email && <p className="mt-1 text-sm text-red-400">{errors.email.message}</p>}
           </div>
 
           <div className="flex flex-col gap-2 w-full">
@@ -110,7 +108,10 @@ export default function LoginForm() {
           <div className="text-center mt-2">
             <p className="text-gray-400">
               Noch nicht registriert?{' '}
-              <Link href="/register" className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
+              <Link
+                href="/register"
+                className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors"
+              >
                 Konto erstellen
               </Link>
             </p>
@@ -118,9 +119,7 @@ export default function LoginForm() {
         </form>
 
         <div className="mt-8 pt-6 border-t border-main-700 flex justify-center">
-          <p className="text-sm text-gray-500">
-            © 2025 Your Company. Alle Rechte vorbehalten.
-          </p>
+          <p className="text-sm text-gray-500">© 2025 Your Company. Alle Rechte vorbehalten.</p>
         </div>
       </div>
     </main>

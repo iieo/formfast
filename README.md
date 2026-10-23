@@ -38,4 +38,3 @@ Start a local Postgres database:
 ```sh
 docker compose up
 ```
-

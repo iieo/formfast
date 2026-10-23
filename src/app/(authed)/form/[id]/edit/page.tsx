@@ -4,9 +4,6 @@ import { buttonClassName } from '@/utils/tailwind/button';
 import Link from 'next/link';
 import FormEditor from './form-editor';
 
-
-
-
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
   const { id: formId } = await params;
 

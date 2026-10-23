@@ -36,7 +36,7 @@ export default function FormSolver({
     <div className="flex flex-col items-center p-6 md:p-12 flex-grow min-h-screen bg-main-900">
       <div className="w-full max-w-3xl my-8">
         <div className="bg-indigo-800 text-white py-10 px-8 rounded-t-lg">
-          <h1 className="text-2xl font-semibold mb-2">{form.name || "Untitled Form"}</h1>
+          <h1 className="text-2xl font-semibold mb-2">{form.name || 'Untitled Form'}</h1>
           {form.name && <p className="text-indigo-200">{form.name}</p>}
         </div>
 
@@ -45,16 +45,13 @@ export default function FormSolver({
             <div className="divide-y divide-main-700">
               {formFields.map((formField) => (
                 <div key={formField.id} className="py-6 px-8">
-                  <GenericFormField
-                    formField={formField}
-                    {...register(formField.id)}
-                  />
+                  <GenericFormField formField={formField} {...register(formField.id)} />
                 </div>
               ))}
             </div>
 
             {/* Submit button container - only shown if no submit button in form */}
-            {!formFields.some(field => field.content.type === 'submit') && (
+            {!formFields.some((field) => field.content.type === 'submit') && (
               <div className="py-6 px-8 flex justify-end">
                 <button
                   type="submit"

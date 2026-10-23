@@ -23,8 +23,8 @@ export default function FormSubmissionsView2({
         return submissionData[formField.id] === undefined
           ? undefined
           : {
-            value: submissionData[formField.id],
-          };
+              value: submissionData[formField.id],
+            };
       });
     }),
   );

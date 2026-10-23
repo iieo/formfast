@@ -4,7 +4,11 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import FormSolver from './form-solver';
 
-export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
   const { id: formId } = await params;
   const form = await dbGetFormById(formId);
   return {
@@ -12,7 +16,6 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     description: 'Erstelle deine eigenen Forms',
   };
 }
-
 
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
   const { id: formId } = await params;

@@ -8,7 +8,6 @@ import { buttonClassName } from '@/utils/tailwind/button';
 import Link from 'next/link';
 import FormSubmissionsView2 from './form-submissions-view2';
 
-
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
   const { id: formId } = await params;
   const form = await dbGetFormById(formId);

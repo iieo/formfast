@@ -1,5 +1,11 @@
 import { z } from 'zod';
-import { formFieldTable, formStatusSchema, formSubmissionTable, formTable, userTable } from './schema';
+import {
+  formFieldTable,
+  formStatusSchema,
+  formSubmissionTable,
+  formTable,
+  userTable,
+} from './schema';
 
 export type UserRow = typeof userTable.$inferSelect;
 export type UserInsert = typeof userTable.$inferInsert;
