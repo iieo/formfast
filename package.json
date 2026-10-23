@@ -9,7 +9,7 @@
     "format": "prettier --write .",
     "types": "tsc --noEmit",
     "format:check": "prettier --check .",
-    "lint": "next lint",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore .",
     "test": "vitest",
     "questions": "tsx ./src/filesystem/index.ts",
     "clean": "find . -type d \\( -name node_modules -o -name dist -o -name .next \\) -not -path \"./.vercel/*\" -prune -exec rm -rf {} \\;",
